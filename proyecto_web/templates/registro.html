@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body class="auth-body">
+
+<div class="auth-container">
+
+    <!-- LADO IZQUIERDO -->
+    <div class="auth-info">
+        <h1>Bienvenido</h1>
+        <p>Crea tu cuenta para acceder al sistema de actividades</p>
+
+        <ul>
+            <li>✔ Gestión de actividades</li>
+            <li>✔ Reportes automáticos</li>
+        </ul>
+    </div>
+
+    <!-- FORMULARIO -->
+    <div class="auth-card">
+
+        <h2>Crear cuenta</h2>
+        <p class="subtitle">Regístrate en segundos</p>
+
+        <form method="POST">
+
+            <div class="input-group">
+                <i class="fa fa-user"></i>
+                <input name="nombre" placeholder="Nombre completo" required>
+            </div>
+
+            <div class="input-group">
+                <i class="fa fa-envelope"></i>
+                <input type="email" name="correo" placeholder="Correo electrónico" required>
+            </div>
+
+            <div class="input-group">
+                <i class="fa fa-lock"></i>
+                <input type="password" name="password" placeholder="Contraseña" required>
+            </div>
+
+            <button class="btn-primary" type="submit">
+                Crear cuenta
+            </button>
+
+        </form>
+
+        <p class="link">
+            ¿Ya tienes cuenta?
+            <a href="/">Iniciar sesión</a>
+        </p>
+
+    </div>
+
+</div>
+
+</body>
+</html>

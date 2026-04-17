@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema de Extensión</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
+    <!-- ICONOS (Font Awesome) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+
+        <h2>UNITECNAR</h2>
+
+        <ul class="menu">
+
+            <li><a href="/dashboard" class="{% if request.path == '/dashboard' %}active{% endif %}">
+                <i class="fa-solid fa-chart-line"></i> Dashboard
+            </a></li>
+
+            <li><a href="/actividades" class="{% if request.path == '/actividades' %}active{% endif %}">
+                <i class="fa-solid fa-list"></i> Actividades
+            </a></li>
+
+            <li><a href="/nueva" class="{% if request.path == '/nueva' %}active{% endif %}">
+                <i class="fa-solid fa-plus"></i> Nueva Actividad
+            </a></li>
+
+            <li><a href="/busqueda" class="{% if request.path == '/busqueda' %}active{% endif %}">
+                <i class="fa-solid fa-magnifying-glass"></i> Búsqueda
+            </a></li>
+
+            <li><a href="/reportes" class="{% if request.path == '/reportes' %}active{% endif %}">
+                <i class="fa-solid fa-chart-bar"></i> Reportes
+            </a></li>
+
+            <li><a href="/ia" class="{% if request.path == '/ia' %}active{% endif %}">
+                <i class="fa-solid fa-robot"></i> Generador IA
+            </a></li>
+
+            <li><a href="/historial" class="{% if request.path == '/historial' %}active{% endif %}">
+                <i class="fa-solid fa-clock-rotate-left"></i> Historial
+            </a></li>
+
+            <li><a href="/usuarios" class="{% if request.path == '/usuarios' %}active{% endif %}">
+                <i class="fa-solid fa-users"></i> Usuarios
+            </a></li>
+
+            <li><a href="/configuracion" class="{% if request.path == '/configuracion' %}active{% endif %}">
+                <i class="fa-solid fa-gear"></i> Configuración
+            </a></li>
+
+        </ul>
+
+    </div>
+
+    <!-- CONTENIDO -->
+    <div class="main">
+
+        <!-- NAVBAR SUPERIOR -->
+        <div class="topbar">
+
+            <div class="top-icons">
+                <i class=""></i>
+                <i class=""></i>
+                <a href="/logout"><i class="fa-solid fa-right-from-bracket"></i></a>
+            </div>
+
+        </div>
+
+        <!-- CONTENIDO DINÁMICO -->
+        <div class="content">
+            {% block content %}
+            {% endblock %}
+        </div>
+
+    </div>
+
+</body>
+</html>

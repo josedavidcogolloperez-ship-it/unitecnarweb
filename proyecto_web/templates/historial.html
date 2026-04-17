@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="page-header">
+    <div>
+        <h1><i class=""></i> Historial del Sistema</h1>
+        <p>Seguimiento de todas las acciones realizadas</p>
+    </div>
+</div>
+
+<div class="card timeline">
+
+    {% if datos %}
+
+        {% for item in datos %}
+
+        <div class="timeline-item">
+
+            <!-- ICONO -->
+            <div class="timeline-icon 
+                {% if item[1]=='Creación' %}azul
+                {% elif item[1]=='Eliminación' %}rojo
+                {% elif item[1]=='Configuración' %}amarillo
+                {% else %}verde
+                {% endif %}
+            ">
+                {% if item[1]=='Creación' %}
+                    <i class="fa fa-plus"></i>
+                {% elif item[1]=='Eliminación' %}
+                    <i class="fa fa-trash"></i>
+                {% elif item[1]=='Configuración' %}
+                    <i class="fa fa-gear"></i>
+                {% else %}
+                    <i class="fa fa-check"></i>
+                {% endif %}
+            </div>
+
+            <!-- CONTENIDO -->
+            <div class="timeline-content">
+
+                <div class="top">
+                    <strong>{{ item[1] }}</strong>
+                    <span class="fecha">{{ item[4] }}</span>
+                </div>
+
+                <p>{{ item[2] }}</p>
+
+                <div class="bottom">
+                    <i class="fa fa-user"></i> {{ item[3] }}
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="empty-state">
+            <i class="fa fa-clock"></i>
+            <p>No hay historial disponible</p>
+        </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

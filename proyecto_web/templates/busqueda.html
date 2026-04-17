@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="page-header">
+    <div>
+        <h1>Búsqueda Avanzada</h1>
+        <p>Encuentra actividades usando filtros</p>
+    </div>
+</div>
+
+<!-- FILTROS -->
+<div class="card">
+
+    <h3><i class=""></i> Filtros</h3>
+
+    <form method="POST" class="form-grid">
+
+        <!-- TEXTO -->
+        <div class="form-group full">
+            <label>Buscar</label>
+            <input type="text" name="texto" placeholder="Nombre o descripción">
+        </div>
+
+        <!-- FACULTAD -->
+        <div class="form-group">
+            <label>Facultad</label>
+            <select name="facultad" id="facultad" onchange="cargarProgramas()">
+                <option value="">Todas</option>
+                <option value="FIC">FIC</option>
+                <option value="FACE">FACE</option>
+                <option value="FCS">FCS</option>
+            </select>
+        </div>
+
+        <!-- PROGRAMA -->
+        <div class="form-group">
+            <label>Programa</label>
+            <select name="programa" id="programa">
+                <option value="">Todos</option>
+            </select>
+        </div>
+
+        <!-- TIPOLOGIA -->
+        <div class="form-group">
+            <label>Tipología</label>
+            <select name="tipologia">
+                <option value="">Todas</option>
+                <option>Académica</option>
+                <option>Investigación</option>
+                <option>Extensión</option>
+            </select>
+        </div>
+
+        <!-- MODALIDAD -->
+        <div class="form-group">
+            <label>Modalidad</label>
+            <select name="modalidad">
+                <option value="">Todas</option>
+                <option>Presencial</option>
+                <option>Virtual</option>
+                <option>Mixta</option>
+            </select>
+        </div>
+
+        <!-- BOTONES -->
+        <div class="form-group full">
+            <button class="btn-primary">
+                <i class="fa fa-search"></i> Buscar
+            </button>
+
+            <a href="/busqueda" class="btn-secondary">Limpiar</a>
+        </div>
+
+    </form>
+
+</div>
+
+<!-- RESULTADOS -->
+<div class="card">
+
+    <h3>Resultados</h3>
+
+    {% if resultados %}
+
+    <table class="tabla">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Facultad</th>
+                <th>Programa</th>
+                <th>Tipología</th>
+                <th>Fecha</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for r in resultados %}
+            <tr>
+                <td><strong>{{ r[1] }}</strong></td>
+                <td>{{ r[9] }}</td> <!-- facultad -->
+                <td>{{ r[5] }}</td> <!-- programa -->
+                <td>{{ r[3] }}</td>
+                <td>{{ r[6] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% else %}
+
+    <div class="empty-state">
+        <i class="fa fa-search"></i>
+        <p>No hay resultados o aún no has buscado</p>
+    </div>
+
+    {% endif %}
+
+</div>
+
+<!-- SCRIPT DINÁMICO -->
+<script>
+function cargarProgramas() {
+    let facultad = document.getElementById("facultad").value;
+    let programa = document.getElementById("programa");
+
+    programa.innerHTML = '<option value="">Todos</option>';
+
+    if (facultad === "FIC") {
+        programa.innerHTML += `
+            <option>Ingeniería de Sistemas</option>
+            <option>Ingeniería Industrial</option>
+            <option>Ingeniería Civil</option>
+        `;
+    }
+
+    else if (facultad === "FACE") {
+        programa.innerHTML += `
+            <option>Administración de Empresas</option>
+            <option>Contaduría Pública</option>
+            <option>Negocios Internacionales</option>
+        `;
+    }
+
+    else if (facultad === "FCS") {
+        programa.innerHTML += `
+            <option>Trabajo Social</option>
+            <option>Psicología</option>
+        `;
+    }
+}
+</script>
+
+{% endblock %}

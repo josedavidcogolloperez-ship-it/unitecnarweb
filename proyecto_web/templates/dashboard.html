@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- HEADER -->
+<div class="page-header">
+    <div>
+        <h1>Dashboard</h1>
+        <p>Resumen general del sistema</p>
+    </div>
+</div>
+
+<!-- TARJETAS -->
+<div class="cards">
+
+    <div class="card-box">
+        <i class="fa fa-list"></i>
+        <div>
+            <h2>{{ total }}</h2>
+            <p>Total Actividades</p>
+        </div>
+    </div>
+
+    <div class="card-box">
+        <i class="fa fa-users"></i>
+        <div>
+            <h2>{{ participantes }}</h2>
+            <p>Total Participantes</p>
+        </div>
+    </div>
+
+    <div class="card-box">
+        <i class="fa fa-clock"></i>
+        <div>
+            <h2>{{ horas }}</h2>
+            <p>Total Horas</p>
+        </div>
+    </div>
+
+</div>
+
+<!-- GRÁFICA -->
+<div class="card">
+    <h2><i class="fa fa-chart-bar"></i> Actividades por Facultad</h2>
+    <canvas id="graficaDashboard"></canvas>
+</div>
+
+<!-- ACTIVIDADES RECIENTES -->
+<div class="card">
+    <h2>Actividades Recientes</h2>
+
+    {% if not recientes %}
+        <div class="empty-state">
+            <p>No hay actividades registradas</p>
+            <span>Comienza registrando tu primera actividad</span>
+        </div>
+    {% else %}
+
+    <table class="tabla">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Facultad</th>
+                <th>Programa</th>
+                <th>Fecha</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for a in recientes %}
+            <tr>
+                <td><strong>{{ a[1] }}</strong></td>
+                <td>{{ a[3] }}</td>
+                <td>{{ a[6] }}</td>
+                <td>{{ a[7] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% endif %}
+</div>
+
+<!-- CHART.JS -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+const datos = {{ recientes | tojson | safe }};
+
+let conteo = {};
+
+datos.forEach(d => {
+    let fac = d[3]; // facultad
+
+    if(!conteo[fac]){
+        conteo[fac] = 0;
+    }
+
+    conteo[fac]++;
+});
+
+const labels = Object.keys(conteo);
+const valores = Object.values(conteo);
+
+const ctx = document.getElementById('graficaDashboard');
+
+new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: labels,
+        datasets: [{
+            label: 'Actividades por Facultad',
+            data: valores
+        }]
+    }
+});
+</script>
+
+{% endblock %}

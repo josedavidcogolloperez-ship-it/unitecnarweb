@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="page-header">
+    <div>
+        <h1><i class=""></i> Gestión de Usuarios</h1>
+        <p>Administra los usuarios del sistema</p>
+    </div>
+</div>
+
+<div class="grid-usuarios">
+
+    <!-- FORMULARIO -->
+    <div class="card">
+
+        <h3>Nuevo Usuario</h3>
+
+        <form method="POST" class="form-grid">
+
+            <div class="form-group full">
+                <label>Nombre</label>
+                <input name="nombre" required>
+            </div>
+
+            <div class="form-group full">
+                <label>Correo</label>
+                <input name="correo" required>
+            </div>
+
+            <div class="form-group">
+                <label>Contraseña</label>
+                <input type="password" name="password" required>
+            </div>
+
+            <div class="form-group">
+                <label>Rol</label>
+                <select name="rol">
+                    <option value="usuario">Usuario</option>
+                    <option value="admin">Administrador</option>
+                </select>
+            </div>
+
+            <div class="form-group full">
+                <button class="btn">Crear Usuario</button>
+            </div>
+
+        </form>
+
+    </div>
+
+    <!-- TABLA -->
+    <div class="card">
+
+        <h3> Lista de Usuarios</h3>
+
+        {% if data %}
+        <table class="tabla">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Correo</th>
+                    <th>Rol</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for u in data %}
+                <tr>
+                    <td>{{ u[1] }}</td>
+                    <td>{{ u[2] }}</td>
+                    <td>
+                        <span class="badge {{ u[4] }}">
+                            {{ u[4] }}
+                        </span>
+                    </td>
+                    <td>
+                        <a href="/eliminar_usuario/{{ u[0] }}" 
+                           class="btn danger"
+                           onclick="return confirm('¿Eliminar usuario?')">
+                           Eliminar
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="empty-state">
+            <p>No hay usuarios registrados</p>
+        </div>
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}

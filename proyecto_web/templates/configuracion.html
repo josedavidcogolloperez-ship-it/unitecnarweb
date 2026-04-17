@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="page-header">
+    <div>
+        <h1><i class=""></i> Configuración</h1>
+        <p>Administra tu cuenta y seguridad</p>
+    </div>
+</div>
+
+<div class="config-pro">
+
+    <!-- PERFIL -->
+    <div class="card">
+
+        <h3>Perfil</h3>
+
+        <form method="POST">
+
+            <label>Nombre</label>
+            <input name="nombre" value="{{ usuario[1] }}">
+
+            <label>Correo</label>
+            <input value="{{ usuario[2] }}" disabled>
+
+            <button class="btn">Guardar Cambios</button>
+
+        </form>
+
+    </div>
+
+    <!-- SEGURIDAD -->
+    <div class="card">
+
+        <h3> Seguridad</h3>
+
+        <form method="POST">
+
+            <label>Contraseña Actual</label>
+            <input type="password" name="actual">
+
+            <label>Nueva Contraseña</label>
+            <input type="password" name="nueva">
+
+            <button class="btn">Actualizar Contraseña</button>
+
+        </form>
+
+        {% if mensaje %}
+            <div class="msg">{{ mensaje }}</div>
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}

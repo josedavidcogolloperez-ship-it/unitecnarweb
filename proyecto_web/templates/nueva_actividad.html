@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="page-header">
+    <div>
+        <h1>Nueva Actividad</h1>
+        <p>Completa la información de la actividad</p>
+    </div>
+</div>
+
+<div class="card">
+
+<form method="POST" class="form-grid">
+
+    <!-- NOMBRE -->
+    <div class="form-group full">
+        <label>Nombre</label>
+        <input name="nombre" required>
+    </div>
+
+    <!-- DESCRIPCIÓN -->
+    <div class="form-group full">
+        <label>Descripción</label>
+        <textarea name="descripcion"></textarea>
+    </div>
+
+    <!-- FACULTAD -->
+    <div class="form-group">
+        <label>Facultad</label>
+        <select name="facultad" id="facultad" onchange="cargarProgramas()" required>
+            <option value="">Seleccionar</option>
+            <option value="FIC">FIC (Ingenierías)</option>
+            <option value="FACE">FACE (Ciencias Económicas)</option>
+            <option value="FCS">FCS (Ciencias Sociales)</option>
+        </select>
+    </div>
+
+    <!-- PROGRAMA -->
+    <div class="form-group">
+        <label>Programa</label>
+        <select name="programa" id="programa" required>
+            <option value="">Selecciona una facultad primero</option>
+        </select>
+    </div>
+
+    <!-- TIPOLOGÍA -->
+    <div class="form-group">
+        <label>Tipología</label>
+        <select name="tipologia">
+            <option>Académica</option>
+            <option>Investigación</option>
+            <option>Extensión</option>
+        </select>
+    </div>
+
+    <!-- MODALIDAD -->
+    <div class="form-group">
+        <label>Modalidad</label>
+        <select name="modalidad">
+            <option>Presencial</option>
+            <option>Virtual</option>
+            <option>Mixta</option>
+        </select>
+    </div>
+
+    <!-- FECHA -->
+    <div class="form-group">
+        <label>Fecha</label>
+        <input type="date" name="fecha">
+    </div>
+
+    <!-- PARTICIPANTES -->
+    <div class="form-group">
+        <label>Participantes</label>
+        <input type="number" name="participantes" min="0">
+    </div>
+
+    <!-- HORAS -->
+    <div class="form-group">
+        <label>Horas</label>
+        <input type="number" name="horas" min="0">
+    </div>
+
+    <!-- BOTÓN -->
+    <div class="form-group full">
+        <button class="btn-primary">
+            <i class="fa fa-save"></i> Guardar Actividad
+        </button>
+    </div>
+
+</form>
+
+</div>
+
+<!-- SCRIPT DINÁMICO -->
+<script>
+function cargarProgramas() {
+    let facultad = document.getElementById("facultad").value;
+    let programa = document.getElementById("programa");
+
+    programa.innerHTML = "";
+
+    if (facultad === "FIC") {
+        programa.innerHTML = `
+            <option>Ingeniería de Sistemas</option>
+            <option>Ingeniería Industrial</option>
+            <option>Ingeniería Civil</option>
+        `;
+    }
+
+    else if (facultad === "FACE") {
+        programa.innerHTML = `
+            <option>Administración de Empresas</option>
+            <option>Contaduría Pública</option>
+            <option>Negocios Internacionales</option>
+        `;
+    }
+
+    else if (facultad === "FCS") {
+        programa.innerHTML = `
+            <option>Trabajo Social</option>
+            <option>Psicología</option>
+        `;
+    }
+
+    else {
+        programa.innerHTML = `<option>Selecciona una facultad primero</option>`;
+    }
+}
+</script>
+
+{% endblock %}

@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="page-header">
+    <div>
+        <h1><i class=""></i> Generador IA</h1>
+        <p>Asistente inteligente para tus actividades</p>
+    </div>
+</div>
+
+<div class="grid-ia">
+
+    <!-- CHAT PRINCIPAL -->
+    <div class="card ia-container">
+
+        <div class="chat-box">
+
+            {% if resultado %}
+
+                <!-- USER -->
+                <div class="mensaje user fade-in">
+                    <div class="avatar user-avatar">
+                        <i class="fa fa-user"></i>
+                    </div>
+                    <div class="bubble">
+                        {{ request.form.texto }}
+                    </div>
+                </div>
+
+                <!-- IA -->
+                <div class="mensaje ia fade-in delay">
+                    <div class="avatar ia-avatar">
+                        <i class="fa fa-robot"></i>
+                    </div>
+                    <div class="bubble ia-bubble">
+                        {{ resultado }}
+                    </div>
+                </div>
+
+            {% else %}
+                <div class="empty-state pulse">
+                    <i class=""></i>
+                    <p></p>
+                </div>
+            {% endif %}
+
+        </div>
+
+        <!-- INPUT -->
+        <form method="POST" class="chat-input">
+
+            <input 
+                type="text" 
+                name="texto" 
+                placeholder="Escribe algo..."
+                required
+            >
+
+            <button>
+                <i class="fa fa-paper-plane"></i>
+            </button>
+
+        </form>
+
+    </div>
+
+    <!-- PANEL LATERAL -->
+    <div class="card ideas-panel">
+
+        <h3> Ideas rápidas</h3>
+
+        <div class="ejemplos">
+
+            <div onclick="usarTexto(this)" class="idea-item">
+                -Crear actividad de emprendimiento
+            </div>
+
+            <div onclick="usarTexto(this)" class="idea-item">
+                -Generar objetivos para un taller
+            </div>
+
+            <div onclick="usarTexto(this)" class="idea-item">
+                -Ideas de actividades educativas
+            </div>
+
+            <div onclick="usarTexto(this)" class="idea-item">
+                -Actividad de robótica universitaria
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+function usarTexto(el){
+    document.querySelector('input[name="texto"]').value = el.innerText;
+}
+</script>
+
+{% endblock %}

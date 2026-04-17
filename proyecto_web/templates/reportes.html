@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="page-header">
+    <div>
+        <h1>Reportes</h1>
+        <p>Genera y visualiza estadísticas de actividades</p>
+    </div>
+</div>
+
+<div class="card">
+
+    <h3> Generar Reporte</h3>
+
+    <form method="POST" class="form-grid">
+
+        <!-- TIPO -->
+        <div class="form-group full">
+            <label>Tipo de Reporte</label>
+            <select name="tipo">
+                <option value="general">Reporte General</option>
+                <option value="tipologia">Por Tipología</option>
+                <option value="programa">Por Programa</option>
+                <option value="facultad">Por Facultad</option>
+            </select>
+        </div>
+
+        <!-- BOTONES -->
+        <div class="form-group full botones">
+
+            <button class="btn-primary">
+                <i class="fa fa-eye"></i> Ver Reporte
+            </button>
+
+            <a href="/exportar" class="btn limpiar">
+                <i class="fa-solid fa-download"></i> Descargar Excel
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
+
+<!-- GRÁFICA -->
+<div class="card">
+
+    <h3>Estadísticas</h3>
+
+    <canvas id="grafica"></canvas>
+
+</div>
+
+<!-- TABLA -->
+<div class="card">
+
+    <h3>Vista del Reporte</h3>
+
+    {% if datos %}
+
+    <table class="tabla">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Facultad</th>
+                <th>Programa</th>
+                <th>Tipología</th>
+                <th>Fecha</th>
+                <th>Participantes</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for d in datos %}
+            <tr>
+                <td><strong>{{ d[1] }}</strong></td>
+                <td>{{ d[9] }}</td>
+                <td>{{ d[5] }}</td>
+                <td>{{ d[3] }}</td>
+                <td>{{ d[6] }}</td>
+                <td>{{ d[7] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% else %}
+
+    <div class="empty-state">
+        <i class="fa fa-file"></i>
+        <p>No hay datos para mostrar</p>
+    </div>
+
+    {% endif %}
+
+</div>
+
+<!-- CHART.JS -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+const datos = {{ (datos | tojson) | safe }};
+
+let conteo = {};
+
+// Agrupar por facultad
+datos.forEach(d => {
+    let facultad = d[9]; // ⚠️ ajustado a tu estructura real
+
+    if (!conteo[facultad]) {
+        conteo[facultad] = 0;
+    }
+
+    conteo[facultad]++;
+});
+
+// Preparar datos
+const labels = Object.keys(conteo);
+const valores = Object.values(conteo);
+
+// Crear gráfico
+const ctx = document.getElementById('grafica').getContext('2d');
+
+new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: labels,
+        datasets: [{
+            label: 'Actividades por Facultad',
+            data: valores,
+            backgroundColor: '#2563eb'
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                display: true
+            }
+        }
+    }
+});
+</script>
+
+{% endblock %}

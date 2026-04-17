@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page-header">
+    <div>
+        <h1>Actividades Registradas</h1>
+        <p>Gestiona todas las actividades de extensión</p>
+    </div>
+
+    <a href="/nueva" class="btn-primary">
+        <i class="fa fa-plus"></i> Nueva Actividad
+    </a>
+</div>
+
+<div class="card">
+
+    
+    <div class="search-box">
+        <i class="fa fa-search"></i>
+        <input type="text" placeholder="Buscar por nombre, tipología o programa...">
+    </div>
+
+    
+    {% if not data %}
+        <div class="empty-state">
+            <i class="fa fa-folder-open"></i>
+            <h3>No hay actividades registradas</h3>
+            <p>Comienza registrando tu primera actividad</p>
+
+            <a href="/nueva" class="btn-primary">
+                <i class="fa fa-plus"></i> Registrar Primera Actividad
+            </a>
+        </div>
+
+    {% else %}
+
+    <!-- TABLA -->
+    <table class="tabla">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Facultad</th>
+                <th>Tipología</th>
+                <th>Programa</th>
+                <th>Fecha</th>
+                <th>Participantes</th>
+                <th>Horas</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for a in data %}
+            <tr>
+
+                <!-- NOMBRE -->
+                <td><strong>{{ a[1] }}</strong></td>
+
+                <!-- FACULTAD -->
+                <td>
+                    <span class="badge">{{ a[9] }}</span>
+                </td>
+
+                <!-- TIPOLOGÍA -->
+                <td>
+                    <span class="badge">{{ a[3] }}</span>
+                </td>
+
+                <!-- PROGRAMA -->
+                <td>{{ a[5] }}</td>
+
+                <!-- FECHA -->
+                <td>
+                    {% if a[6] %}
+                        {{ a[6] }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+
+                <!-- PARTICIPANTES -->
+                <td>
+                    <span class="badge blue">
+                        {{ a[7] or 0 }}
+                    </span>
+                </td>
+
+                <!-- HORAS -->
+                <td>
+                    <span class="badge green">
+                        {{ a[8] or 0 }}
+                    </span>
+                </td>
+
+                <!-- ACCIONES -->
+                <td>
+
+                    <!-- ELIMINAR -->
+                    <form action="/eliminar_actividad/{{ a[0] }}" method="POST"
+                          style="display:inline"
+                          onsubmit="return confirm('¿Seguro que deseas eliminar esta actividad?')">
+
+                        <button type="submit" class="btn danger">
+                            <i class="fa fa-trash"></i>
+                        </button>
+
+                    </form>
+
+                </td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}
